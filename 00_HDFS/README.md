@@ -3,7 +3,7 @@
 Go to command line / terminal and run in a folder of your liking:  
 `git clone https://github.com/big-data-europe/docker-hadoop`
 
-Replace the Docker compose file with the one in this repo.  
+Replace the Docker compose file in `docker-hadoop` folder with the one in this repo. This will add additional datanodes and a Docker volume for mounting text files to the namenode.  
 
 Then, when in the new docker-hadoop folder, start the Docker services:  
 `docker compose up -d`  
@@ -27,7 +27,7 @@ Create a directory for hadoop input
 `hadoop fs -mkdir -p /user/hadoop/input`  
 
 Put the text file into hadoop file system:  
-`hadoop fs -put /tmp/files/test.txt /user/hadoop/input/`  
+`hadoop fs -put file:/tmp/files/test.txt hdfs:/user/hadoop/input/`  
 
 Check that the file exists:  
 `hadoop fs -ls /user/hadoop/input/`  
@@ -54,13 +54,12 @@ The `hdfs` command was designed only for talking with the hdfs file system, whil
 Yarn is the resource manager for Hadoop. We can check the UI:  
 `localhost:8088`  
 
-It's also possible to run commands without going into the Docker service.  
-E.g., create a new text file in local `tmp` folder.  
+Let's create a new text file in local `tmp` folder to go through the flow once more.  
 
-`docker exec namenode hadoop fs -mkdir /user/hadoop/input2`  
-`docker exec namenode hadoop fs -put file:/tmp/files/file.txt hdfs:/user/hadoop/input2/`  
-
-`docker exec namenode hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /user/hadoop/input2 /user/hadoop/output2`  
+`docker exec -it namenode  bash`
+`hadoop fs -mkdir /user/hadoop/input2`  
+`hadoop fs -put file:/tmp/files/file.txt hdfs:/user/hadoop/input2/`  
+`hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /user/hadoop/input2 /user/hadoop/output2`  
 
 You can view the execution in the yarn UI.  
 
