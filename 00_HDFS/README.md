@@ -56,7 +56,7 @@ Yarn is the resource manager for Hadoop. We can check the UI:
 
 Let's create a new text file in local `tmp` folder to go through the flow once more.  
 
-`docker exec -it namenode  bash`
+`docker exec -it namenode  bash`  
 `hadoop fs -mkdir /user/hadoop/input2`  
 `hadoop fs -put file:/tmp/files/file.txt hdfs:/user/hadoop/input2/`  
 `hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.1.jar wordcount /user/hadoop/input2 /user/hadoop/output2`  
